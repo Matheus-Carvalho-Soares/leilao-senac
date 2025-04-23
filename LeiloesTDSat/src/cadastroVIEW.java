@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+import javax.swing.*;
+
 /**
  *
  * @author Adm
@@ -144,19 +146,30 @@ public class cadastroVIEW extends javax.swing.JFrame {
         String nome = cadastroNome.getText();
         String valor = cadastroValor.getText();
         String status = "A Venda";
+
+        if (nome.isEmpty() || valor.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos.");
+            return;
+        }
+
         produto.setNome(nome);
         produto.setValor(Integer.parseInt(valor));
         produto.setStatus(status);
-        
+
         ProdutosDAO produtodao = new ProdutosDAO();
-        produtodao.cadastrarProduto(produto);
-        
-    }//GEN-LAST:event_btnCadastrarActionPerformed
+        produtodao.cadastrarProduto(produto);  // Chama o método para cadastrar
+
+        cadastroNome.setText("");  // Limpa o campo nome
+        cadastroValor.setText(""); // Limpa o campo valor
+    }
+//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdutosActionPerformed
-        listagemVIEW listagem = new listagemVIEW(); 
+        listagemVIEW listagem = new listagemVIEW();
         listagem.setVisible(true);
-    }//GEN-LAST:event_btnProdutosActionPerformed
+        this.dispose();  // Fecha a tela de cadastro ao abrir a tela de listagem
+    }
+//GEN-LAST:event_btnProdutosActionPerformed
 
     /**
      * @param args the command line arguments

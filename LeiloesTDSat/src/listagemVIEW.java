@@ -1,6 +1,8 @@
 
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -204,22 +206,24 @@ public class listagemVIEW extends javax.swing.JFrame {
     private void listarProdutos(){
         try {
             ProdutosDAO produtosdao = new ProdutosDAO();
-            
+
             DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
-            model.setNumRows(0);
-            
-            ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutos();
-            
-            for(int i = 0; i < listagem.size(); i++){
+            model.setNumRows(0);  // Limpa a tabela antes de adicionar novos dados
+
+            ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutos(); // Obtém os produtos cadastrados
+
+            // Adiciona cada produto na tabela
+            for (int i = 0; i < listagem.size(); i++) {
                 model.addRow(new Object[]{
-                    listagem.get(i).getId(),
-                    listagem.get(i).getNome(),
-                    listagem.get(i).getValor(),
-                    listagem.get(i).getStatus()
+                        listagem.get(i).getId(),
+                        listagem.get(i).getNome(),
+                        listagem.get(i).getValor(),
+                        listagem.get(i).getStatus()
                 });
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar produtos: " + e.getMessage());
         }
-    
     }
+
 }
