@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.*;
 
 
 public class ProdutosDAO {
@@ -51,13 +52,45 @@ public class ProdutosDAO {
             }
         }
     }
-    public ArrayList<ProdutosDTO> listarProdutos(){
-        
-        return listagem;
+
+        public ArrayList<ProdutosDTO> listarProdutos() {
+            ArrayList<ProdutosDTO> produtos = new ArrayList<>();
+            Connection conn = null;
+            Statement stmt = null;
+            ResultSet rs = null;
+
+            try {
+                conn = new conectaDAO().connectDB();
+                stmt = conn.createStatement();
+                String sql = "SELECT * FROM produtos"; // ou a tabela que você tiver no banco
+                rs = stmt.executeQuery(sql);
+
+                while (rs.next()) {
+                    ProdutosDTO produto = new ProdutosDTO();
+                    produto.setId(rs.getInt("id"));
+                    produto.setNome(rs.getString("nome"));
+                    produto.setValor(rs.getInt("valor"));
+                    produto.setStatus(rs.getString("status"));
+                    produtos.add(produto);
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao listar produtos: " + e.getMessage());
+            } finally {
+                try {
+                    if (rs != null) rs.close();
+                    if (stmt != null) stmt.close();
+                    if (conn != null) conn.close();
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Erro ao fechar a conexão: " + e.getMessage());
+                }
+            }
+            return produtos;
+        }
     }
+
     
     
     
         
-}
+
 

@@ -10,10 +10,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://D:/ativsenac/lib/mysql-connector-java-8.0.21.jar!/" />
+          <root url="file://D:/ativsenac/LeiloesTDSat/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+        <jarDirectory url="file://D:/ativsenac/LeiloesTDSat/lib" recursive="false" />
       </library>
     </orderEntry>
   </component>

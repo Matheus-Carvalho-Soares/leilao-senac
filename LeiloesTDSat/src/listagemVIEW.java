@@ -203,27 +203,30 @@ public class listagemVIEW extends javax.swing.JFrame {
     private javax.swing.JTable listaProdutos;
     // End of variables declaration//GEN-END:variables
 
-    private void listarProdutos(){
+    private void listarProdutos() {
         try {
             ProdutosDAO produtosdao = new ProdutosDAO();
 
+            // Obtém os produtos do banco de dados
+            ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutos();
+
+            // Obtemos o modelo da tabela para manipular os dados
             DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
-            model.setNumRows(0);  // Limpa a tabela antes de adicionar novos dados
+            model.setNumRows(0); // Limpa a tabela antes de adicionar os novos dados
 
-            ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutos(); // Obtém os produtos cadastrados
-
-            // Adiciona cada produto na tabela
-            for (int i = 0; i < listagem.size(); i++) {
+            // Preenche a tabela com os produtos
+            for (ProdutosDTO produto : listagem) {
                 model.addRow(new Object[]{
-                        listagem.get(i).getId(),
-                        listagem.get(i).getNome(),
-                        listagem.get(i).getValor(),
-                        listagem.get(i).getStatus()
+                        produto.getId(),
+                        produto.getNome(),
+                        produto.getValor(),
+                        produto.getStatus()
                 });
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao listar produtos: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao carregar produtos: " + e.getMessage());
         }
     }
+
 
 }
